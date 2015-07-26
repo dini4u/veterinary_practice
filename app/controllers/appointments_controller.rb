@@ -5,18 +5,16 @@ class AppointmentsController < ApplicationController
   # GET /appointments
   # GET /appointments.json
   def index
-
-
-
-
     @appointments =  @current_user.role == "customer" ? Appointment.where(:customer_id => @current_user.id).where("date_of_visit > ?", Date.today).all : Appointment.all
-    pet_ids, customer_ids = [], []
+    pet_ids, customer_ids, doctor_ids = [], [], []
     @appointments.each do |appointment|
       pet_ids << appointment.pet_id
       customer_ids << appointment.customer_id
+      doctor_ids << appointment.doctor_id
     end
     @customer_info = User.where(id: customer_ids).index_by(&:id)
     @pet_info = Pet.where(id: pet_ids).index_by(&:id)
+    @doctor_info = Doctor.where(id: doctor_ids).index_by(&:id)
   end
 
   # GET /appointments/1
@@ -29,12 +27,14 @@ class AppointmentsController < ApplicationController
     @appointment = Appointment.new
     @pets_array = Pet.all.map { |pet| [pet.name, pet.id] } 
     @customer_array = User.where(:role => 'customer').all.map{|customer| [customer.name, customer.id]}
+    @doctors_array = Doctor.all.map {|doctor| [doctor.name, doctor.id]}
   end
 
   # GET /appointments/1/edit
   def edit
     @pets_array = Pet.all.map { |pet| [pet.name, pet.id] } 
     @customer_array = User.where(:role => 'customer').all.map{|customer| [customer.name, customer.id]}
+    @doctors_array = Doctor.all.map {|doctor| [doctor.name, doctor.id]}
   end
 
   # POST /appointments
@@ -45,6 +45,7 @@ class AppointmentsController < ApplicationController
 
     @appointment = Appointment.new(appointment_create_params)
     @pets_array = Pet.all.map { |pet| [pet.name, pet.id] } 
+    @doctors_array = Doctor.all.map {|doctor| [doctor.name, doctor.id]}
     @customer_array = User.where(:role => 'customer').all.map{|customer| [customer.name, customer.id]}
     respond_to do |format|
       if @appointment.save
@@ -89,7 +90,7 @@ class AppointmentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def appointment_params
-      params[:appointment].permit(:pet_id, :customer_id, :date_of_visit, :appointment_required, :reason_for_visit)
+      params[:appointment].permit(:pet_id, :customer_id, :date_of_visit, :appointment_required, :reason_for_visit, :doctor_id)
     end
     def check_user_permissions
       redirect_to "/" and return if @current_user.role == "customer"

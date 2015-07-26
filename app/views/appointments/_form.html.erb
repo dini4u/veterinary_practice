@@ -18,6 +18,10 @@
         <input value="<%=@appointment.present?? @appointment.date_of_visit : ""%>" type="text" name="appointment[date_of_visit]" id="appointment_name"/>
       </p>
       <p>  
+        <label>Doctor Name*: </label>
+        <%= select("appointment", "doctor_id", @doctors_array, {:include_blank => true}) %>
+      </p>
+      <p>  
         <label>Pet Name*: </label>
         <%= select("appointment", "pet_id", @pets_array, {:include_blank => true}) %>
       </p>

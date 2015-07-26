@@ -16,6 +16,7 @@ ActiveRecord::Schema.define(version: 20150726035417) do
   create_table "appointments", force: true do |t|
     t.integer  "pet_id",                              null: false
     t.integer  "customer_id",                         null: false
+    t.integer  "doctor_id",                           null: false
     t.datetime "date_of_visit",                       null: false
     t.boolean  "appointment_required", default: true, null: false
     t.text     "reason_for_visit",                    null: false
