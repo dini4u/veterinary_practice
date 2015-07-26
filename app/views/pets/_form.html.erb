@@ -1,0 +1,43 @@
+<%= form_for(@pet) do |f| %>
+  <% if @pet.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@pet.errors.count, "error") %> prohibited this pet from being saved:</h2>
+
+      <ul>
+      <% @pet.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <fieldset>
+      <p>
+        <label>Name*: </label>
+        <input value="<%=@pet.present?? @pet.name : ""%>" type="text" name="pet[name]" id="pet_name"/>
+      </p>
+      <p>  
+        <label>Type*: </label>
+        <%= select("pet", "pet_type", ["cat", "bird",  "dog"], {:include_blank => true}) %>
+      </p>
+      <p>
+        <label>Breed*: </label>  
+        <input value="<%=@pet.present?? @pet.breed : ""%>" type="text" name="pet[breed]" id="pet_breed"/>
+      </p>  
+      <p>
+        <label>Age*: </label>
+        <input value="<%=@pet.present?? @pet.age : ""%>" type="text" name="pet[age]" id="pet_age"/>
+      </p>
+      <p>  
+        <label>Weight*: </label>
+        <input value="<%=@pet.present?? @pet.weight : ""%>" type="text" name="pet[weight]" id="pet_weight"/>
+      </p>  
+      <p>
+        <label>Date of Last Visit* (mm/dd/yyyy): </label>
+        <input value="<%=@pet.present?? @pet.date_of_last_visit : ""%>" type="text" name="pet[date_of_last_visit]" id="pet_date_of_last_visit"/>
+      </p>
+      <%= f.submit %>
+    </fieldset>
+  </div>
+<% end %>

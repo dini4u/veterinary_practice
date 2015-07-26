@@ -1,0 +1,35 @@
+<%= form_for(@user) do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <fieldset>
+      <p>
+        <label>Name*: </label>
+        <input value="<%=@user.present?? @user.name : ""%>" type="text" name="user[name]" id="user_name"/>
+      </p>
+      <p>  
+        <label>Username*: </label>
+        <input value="<%=@user.present?? @user.username : ""%>" type="text" name="user[username]" id="user_username"/>
+      </p>
+      <p>
+        <label>Password*: </label>  
+        <input value="<%=@user.present?? @user.password : ""%>" type="password" name="user[password]" id="user_password"/>
+      </p>  
+      <p>
+        <label>Role*: </label>
+        <%= select("user", "role", ["admin", "receptionist",  "customer"], {:include_blank => true}) %>
+      </p>
+      <%= f.submit %>
+    </fieldset>
+  </div>
+<% end %>

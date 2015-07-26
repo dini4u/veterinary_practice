@@ -1,0 +1,39 @@
+<%= form_for(@appointment) do |f| %>
+  <% if @appointment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@appointment.errors.count, "error") %> prohibited this appointment from being saved:</h2>
+
+      <ul>
+      <% @appointment.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+     <fieldset>
+      <p>
+        <label>Date of Visit* (mm/dd/yyyy): </label>
+        <input value="<%=@appointment.present?? @appointment.date_of_visit : ""%>" type="text" name="appointment[date_of_visit]" id="appointment_name"/>
+      </p>
+      <p>  
+        <label>Pet Name*: </label>
+        <%= select("appointment", "pet_id", @pets_array, {:include_blank => true}) %>
+      </p>
+      <p>
+        <label>Customer Name*: </label>  
+        <%= select("appointment", "customer_id", @customer_array, {:include_blank => true}) %>
+      </p>  
+      <p>
+        <label>Requires Reminder of Appointment*: </label>
+        <%= check_box :appointment, :appointment_required %>
+      </p>
+      <p>  
+        <label>Reason for Visit*: </label>
+        <input value="<%=@appointment.present?? @appointment.reason_for_visit : ""%>" type="textarea" name="appointment[reason_for_visit]" id="appointment_weight"/>
+      </p>  
+      <%= f.submit %>
+    </fieldset>
+  </div>
+<% end %>

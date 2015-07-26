@@ -1,0 +1,48 @@
+<%= form_for(@doctor) do |f| %>
+  <% if @doctor.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@doctor.errors.count, "error") %> prohibited this doctor from being saved:</h2>
+
+      <ul>
+      <% @doctor.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <fieldset>
+      <p>
+        <label>Name*: </label>
+        <input value="<%=@doctor.present?? @doctor.name : ""%>" type="text" name="doctor[name]" id="doctor_name"/>
+      </p>
+      <p>  
+        <label>Address: </label>
+        <input value="<%=@doctor.present?? @doctor.address : ""%>" type="text" name="doctor[address]" id="doctor_address"/>
+      </p>
+      <p>
+        <label>City: </label>  
+        <input value="<%=@doctor.present?? @doctor.city : ""%>" type="text" name="doctor[city]" id="doctor_city"/>
+      </p>  
+      <p>
+        <label>State: </label>
+        <input value="<%=@doctor.present?? @doctor.state : ""%>" type="text" name="doctor[state]" id="doctor_state"/>
+      </p>
+      <p>  
+        <label>Zip*: </label>
+        <input value="<%=@doctor.present?? @doctor.zip : ""%>" type="text" name="doctor[zip]" id="doctor_zip"/>
+      </p>  
+      <p>
+        <label>School: </label>
+        <input value="<%=@doctor.present?? @doctor.school : ""%>" type="text" name="doctor[school]" id="doctor_school"/>
+      </p>
+      <p>  
+        <label>Years In Practice*: </label>
+        <input value="<%=@doctor.present?? @doctor.years_in_practice : ""%>" type="text" name="doctor[years_in_practice]" id="doctor_years_in_practice"/>
+      </p>
+      <%= f.submit %>
+    </fieldset>
+    
+  </div>
+<% end %>

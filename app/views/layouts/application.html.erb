@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>VeterinaryPractice</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<div>
+	<div style="float:left; padding:50px 10px ; border: 1px solid;">
+		<%if @current_user.present?%>
+			Hello, <%=@current_user.username%> (<%=@current_user.role%>)<br/><br/>
+			<%if ['admin'].include?(@current_user.role)%>
+				<a href="/users">Users</a><br/>
+				<a href="/pets">Pets</a><br/>
+				<a href="/doctors">Doctors</a><br/>
+			<%end%>
+			<%if ['receptionist', 'admin'].include?(@current_user.role)%>
+				<a href="/appointments">Appointments</a><br/>
+			<%end%>
+			<%if ['customer'].include?(@current_user.role)%>
+				<a href="/appointments">View Next Appointments</a><br/>
+			<%end%>
+			<a href="/logout">Logout</a><br/>
+		<%end%>
+	</div>
+	<div style="float:left; padding:10px; border: 1px solid;width:900px"><%= yield %></div>
+</div>
+</body>
+</html>
